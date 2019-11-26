@@ -514,7 +514,7 @@ Tagify.prototype = {
             },
 
             onClickScope(e){
-                var tagElm = e.target.closest('tag'), tagElmIdx;
+                var tagElm = $(e.target).closest('tag'), tagElmIdx;
 
                 if( e.target.tagName == "TAGS" )
                     this.DOM.input.focus();
@@ -534,7 +534,7 @@ Tagify.prototype = {
             },
 
             onEditTagInput( editableElm ){
-                var tagElm = editableElm.closest('tag'),
+                var tagElm = $(editableElm).closest('tag'),
                     tagElmIdx = this.getNodeIndex(tagElm),
                     value = this.input.normalize(editableElm),
                     isValid = value.toLowerCase() == editableElm.originalValue.toLowerCase() || this.validateTag(value);
@@ -545,7 +545,7 @@ Tagify.prototype = {
             },
 
             onEditTagBlur( editableElm ){
-                var tagElm       = editableElm.closest('tag'),
+                var tagElm       = $(editableElm).closest('tag'),
                     tagElmIdx    = this.getNodeIndex(tagElm),
                     currentValue = this.input.normalize(editableElm),
                     value        = currentValue || editableElm.originalValue,
@@ -593,7 +593,7 @@ Tagify.prototype = {
             },
 
             onDoubleClickScope(e){
-                var tagElm = e.target.closest('tag'),
+                var tagElm = $(e.target).closest('tag'),
                     _s = this.settings,
                     isEditingTag,
                     isReadyOnlyTag;
@@ -1523,7 +1523,7 @@ Tagify.prototype = {
 
                     if( e.button != 0 || e.target == this.DOM.dropdown ) return; // allow only mouse left-clicks
 
-                    listItemElm = e.target.closest(".tagify__dropdown__item");
+                    listItemElm = $(e.target).closest(".tagify__dropdown__item");
 
                     if( listItemElm ){
                         // make sure the list item belongs to this context of the Tagify instance (and not some other instance's manual suggestions list)
@@ -1545,7 +1545,7 @@ Tagify.prototype = {
                         this.dropdown.hide.call(this);
 
                         // if closest element is NOT "tagify", remove "focus" class
-                        if( !e.target.closest(".tagify") )
+                        if( !$(e.target).closest(".tagify") )
                             this.events.callbacks.onFocusBlur.call(this, {type:'blur', target:this.DOM.input})
                     }
                 }

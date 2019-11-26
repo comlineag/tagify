@@ -25,7 +25,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -512,7 +512,7 @@ Tagify.prototype = {
       },
       onPaste: function onPaste(e) {},
       onClickScope: function onClickScope(e) {
-        var tagElm = e.target.closest('tag'),
+        var tagElm = $(e.target).closest('tag'),
             tagElmIdx;
         if (e.target.tagName == "TAGS") this.DOM.input.focus();else if (e.target.tagName == "X") {
           this.removeTag(e.target.parentNode);
@@ -528,7 +528,7 @@ Tagify.prototype = {
         if (this.settings.mode == 'select' || this.settings.dropdown.enabled === 0) this.dropdown.show.call(this);
       },
       onEditTagInput: function onEditTagInput(editableElm) {
-        var tagElm = editableElm.closest('tag'),
+        var tagElm = $(editableElm).closest('tag'),
             tagElmIdx = this.getNodeIndex(tagElm),
             value = this.input.normalize(editableElm),
             isValid = value.toLowerCase() == editableElm.originalValue.toLowerCase() || this.validateTag(value);
@@ -543,7 +543,7 @@ Tagify.prototype = {
         });
       },
       onEditTagBlur: function onEditTagBlur(editableElm) {
-        var tagElm = editableElm.closest('tag'),
+        var tagElm = $(editableElm).closest('tag'),
             tagElmIdx = this.getNodeIndex(tagElm),
             currentValue = this.input.normalize(editableElm),
             value = currentValue || editableElm.originalValue,
@@ -590,7 +590,7 @@ Tagify.prototype = {
         }
       },
       onDoubleClickScope: function onDoubleClickScope(e) {
-        var tagElm = e.target.closest('tag'),
+        var tagElm = $(e.target).closest('tag'),
             _s = this.settings,
             isEditingTag,
             isReadyOnlyTag;
@@ -1469,7 +1469,7 @@ Tagify.prototype = {
           var value, listItemElm;
           if (e.button != 0 || e.target == this.DOM.dropdown) return; // allow only mouse left-clicks
 
-          listItemElm = e.target.closest(".tagify__dropdown__item");
+          listItemElm = $(e.target).closest(".tagify__dropdown__item");
 
           if (listItemElm) {
             // make sure the list item belongs to this context of the Tagify instance (and not some other instance's manual suggestions list)
@@ -1485,7 +1485,7 @@ Tagify.prototype = {
           else {
               this.dropdown.hide.call(this); // if closest element is NOT "tagify", remove "focus" class
 
-              if (!e.target.closest(".tagify")) this.events.callbacks.onFocusBlur.call(this, {
+              if (!$(e.target).closest(".tagify")) this.events.callbacks.onFocusBlur.call(this, {
                 type: 'blur',
                 target: this.DOM.input
               });

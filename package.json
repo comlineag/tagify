@@ -3,7 +3,7 @@
     "version": "2.31.6",
     "homepage": "https://github.com/yairEO/tagify",
     "description": "lightweight, efficient Tags input component in Vanilla JS / React / Angular [super customizable, tiny size & top performance]",
-    "license" : "MIT",
+    "license": "MIT",
     "_npmUser": {
         "name": "vsync",
         "email": "vsync.design@gmail.com"
