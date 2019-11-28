@@ -514,6 +514,7 @@ Tagify.prototype = {
       onClickScope: function onClickScope(e) {
         var tagElm = $(e.target).closest('tag'),
             tagElmIdx;
+        tagElm = tagElm && tagElm.length > 0 ? tagElm[0] : null;
         if (e.target.tagName == "TAGS") this.DOM.input.focus();else if (e.target.tagName == "X") {
           this.removeTag(e.target.parentNode);
           return; // for select-mode: do not continue, so the dropdown won't be shown
@@ -528,8 +529,9 @@ Tagify.prototype = {
         if (this.settings.mode == 'select' || this.settings.dropdown.enabled === 0) this.dropdown.show.call(this);
       },
       onEditTagInput: function onEditTagInput(editableElm) {
-        var tagElm = $(editableElm).closest('tag'),
-            tagElmIdx = this.getNodeIndex(tagElm),
+        var tagElm = $(editableElm).closest('tag');
+        tagElm = tagElm && tagElm.length > 0 ? tagElm[0] : null;
+        var tagElmIdx = this.getNodeIndex(tagElm),
             value = this.input.normalize(editableElm),
             isValid = value.toLowerCase() == editableElm.originalValue.toLowerCase() || this.validateTag(value);
         tagElm.classList.toggle('tagify--invalid', isValid !== true);
@@ -543,8 +545,10 @@ Tagify.prototype = {
         });
       },
       onEditTagBlur: function onEditTagBlur(editableElm) {
-        var tagElm = $(editableElm).closest('tag'),
-            tagElmIdx = this.getNodeIndex(tagElm),
+        var tagElm = $(editableElm).closest('tag');
+        tagElm = tagElm && tagElm.length > 0 ? tagElm[0] : null;
+
+        var tagElmIdx = this.getNodeIndex(tagElm),
             currentValue = this.input.normalize(editableElm),
             value = currentValue || editableElm.originalValue,
             hasChanged = this.input.normalize(editableElm) != editableElm.originalValue,
@@ -590,8 +594,9 @@ Tagify.prototype = {
         }
       },
       onDoubleClickScope: function onDoubleClickScope(e) {
-        var tagElm = $(e.target).closest('tag'),
-            _s = this.settings,
+        var tagElm = $(e.target).closest('tag');
+        tagElm = tagElm && tagElm.length > 0 ? tagElm[0] : null;
+        var _s = this.settings,
             isEditingTag,
             isReadyOnlyTag;
         if (!tagElm) return;
@@ -1470,6 +1475,7 @@ Tagify.prototype = {
           if (e.button != 0 || e.target == this.DOM.dropdown) return; // allow only mouse left-clicks
 
           listItemElm = $(e.target).closest(".tagify__dropdown__item");
+          listItemElm = listItemElm && listItemElm.length > 0 ? listItemElm[0] : null;
 
           if (listItemElm) {
             // make sure the list item belongs to this context of the Tagify instance (and not some other instance's manual suggestions list)
